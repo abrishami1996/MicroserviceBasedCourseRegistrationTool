@@ -1,0 +1,132 @@
+#### AuthDB service ####
+apiVersion: v1
+kind: Service
+metadata:
+  name: authdbservice
+spec:
+  selector:
+    app: authdb
+  type: LoadBalancer
+  #clusterIP: 10.103.32.210
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 3306
+      # Port to forward to inside the pod
+      targetPort: 3306
+      # Port accessible from outside
+      nodePort: 30001
+---
+#### CourseManageDB service ####
+apiVersion: v1
+kind: Service
+metadata:
+  name: coursemanagedbservice
+spec:
+  selector:
+    app: coursemanagedb
+  type: LoadBalancer
+  #clusterIP: 10.103.32.210
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 3306
+      # Port to forward to inside the pod
+      targetPort: 3306
+      # Port accessible from outside
+      nodePort: 30002
+---
+#### CourseSelectionDB service ####
+apiVersion: v1
+kind: Service
+metadata:
+  name: courseselectiondbservice
+spec:
+  selector:
+    app: courseselectiondb
+  type: LoadBalancer
+  #clusterIP: 10.103.32.210
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 3306
+      # Port to forward to inside the pod
+      targetPort: 3306
+      # Port accessible from outside
+      nodePort: 30003
+---
+#### Auth Module service ####
+kind: Service
+apiVersion: v1
+metadata:
+  name: authservice
+spec:
+  selector:
+    app: auth
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 9090
+      # Port to forward to inside the pod
+      targetPort: 8080
+      # Port accessible outside cluster
+      nodePort: 30080
+  clusterIP: 10.103.32.140
+  type: LoadBalancer
+---
+#### Course Manager Module service ####
+kind: Service
+apiVersion: v1
+metadata:
+  name: coursemanageservice
+spec:
+  selector:
+    app: coursemanage
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 9090
+      # Port to forward to inside the pod
+      targetPort: 8080
+      # Port accessible outside cluster
+      nodePort: 30090
+  clusterIP: 10.103.32.150
+  type: LoadBalancer
+
+---
+#### Course Selection Module service ####
+kind: Service
+apiVersion: v1
+metadata:
+  name: courseselectionservice
+spec:
+  selector:
+    app: courseselection
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 9090
+      # Port to forward to inside the pod
+      targetPort: 8080
+      # Port accessible outside cluster
+      nodePort: 30100
+  clusterIP: 10.103.32.160
+  type: LoadBalancer
+---
+#### User panel Module service ####
+kind: Service
+apiVersion: v1
+metadata:
+  name: userpanelservice
+spec:
+  selector:
+    app: userpanel
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 9090
+      # Port to forward to inside the pod
+      targetPort: 8000
+      # Port accessible outside cluster
+      nodePort: 30500
+  type: LoadBalancer

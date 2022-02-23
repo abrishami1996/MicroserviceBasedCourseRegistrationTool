@@ -1,0 +1,17 @@
+{% extends "Base.html" %}
+
+{% block content %}
+<h2>Courses of student {{studentId}}</h2>
+{% for course in list %}
+    <div>{{ course }}</div>
+
+    {% if user_is_admin_or_employee %}
+        <a href="{% url 'dropCourseForStudent' student_id=studentId course_id=course %}">Drop course for student</a>
+    {% elif user_is_student %}
+        <a href="{% url 'removeTakenCourse' courseId=course %}">Drop course</a>
+    {% endif %}
+    <hr>
+{% endfor %}
+
+
+{% endblock %}

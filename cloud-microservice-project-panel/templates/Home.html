@@ -1,0 +1,65 @@
+{% extends "Base.html" %}
+
+{% block content %}
+    {% if isAdmin %}
+        Hello Admin
+    {% endif %}
+
+    {% if isStudent %}
+        Hello Student {{ userDetail.studentNumber }}
+    {% endif %}
+
+    {% if isProfessor %}
+        Hello Professor {{ userDetail.professorNumber }}
+    {% endif %}
+
+    {% if isEmployee %}
+        Hello Employee {{ userDetail.employeeNumber }}
+    {% endif %}
+
+    <ul>
+            <li><a href="{% url 'logout' %}" >Logout</a></li>
+        {% if isAdmin %}
+            <li><a href="{% url 'registerEmployee' %}">register new employee</a></li>
+            <li><a href="{% url 'registerProfessor' %}">register new professor</a></li>
+            <li><a href="{% url 'registerStudent' %}">register new student</a></li>
+            <li><a href="{% url 'addRole' %}">add role to a person</a></li>
+            <li><a href="{% url 'allEmployees' %}">get list of all employees</a></li>
+            <li><a href="{% url 'allProfessors' %}">get list of all professors</a></li>
+            <li><a href="{% url 'allStudents' %}">get list of all students</a></li>
+            <li><a href="{% url 'deleteUser' %}">delete a user</a></li>
+
+            <li><a href="{% url 'addAvailableCourse' %}">define a new course</a></li>
+            <li><a href="{% url 'availableCourses' %}">get list of courses</a> </li>
+            <li><a href="{% url 'removeAvailableCourse' %}">remove a course</a></li>
+
+            <li><a href="{% url 'takeCourseForStudentForm' %}">take course for student</a></li>
+            <li><a href="{% url 'dropCourseForStudentForm' %}">drop course for student</a></li>
+
+        {% endif %}
+
+
+        {% if isEmployee %}
+            <li><a href="{% url 'allStudents' %}">get list of all students</a></li>
+            <li><a href="{% url 'availableCourses' %}">get list of courses</a></li>
+            <li><a href="{% url 'addAvailableCourse' %}">define a new course</a></li>
+            <li><a href="{% url 'removeAvailableCourse' %}">remove a course</a></li>
+            <li><a href="{% url 'takeCourseForStudentForm' %}">take course for student</a></li>
+            <li><a href="{% url 'dropCourseForStudentForm' %}">drop course for student</a></li>
+        {% endif %}
+
+        {% if isProfessor %}
+            <li><a href="{% url 'availableCourses' %}">get list of available courses</a></li>
+            <li><a href="{% url 'taughtCourses' %}">get list of your courses</a></li>
+        {% endif %}
+
+
+        {% if isStudent %}
+            <li><a href="{% url 'availableCourses' %}">get list of available courses</a></li>
+            <li><a href="{% url 'allStudentTakenCourses' userDetail.studentNumber %}">check selected courses</a></li>
+        {% endif %}
+
+
+    </ul>
+
+{% endblock %}

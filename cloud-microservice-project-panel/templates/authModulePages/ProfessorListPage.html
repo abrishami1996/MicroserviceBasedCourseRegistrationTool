@@ -1,0 +1,15 @@
+{% extends "Base.html" %}
+
+{% block content %}
+{% for u in userList %}
+    <div>
+        <p>{{ u.firstName }}</p>
+        <p>{{ u.lastName }}</p>
+        <p>{{ u.department }}</p>
+        <p>{{ u.professorNumber }}</p>
+    </div>
+    <a href="{% url 'taughtCoursesByProf' u.professorNumber %}">List of taught courses</a>
+    <hr>
+{% endfor %}
+
+{% endblock %}

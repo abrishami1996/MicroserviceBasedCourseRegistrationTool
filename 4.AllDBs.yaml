@@ -1,0 +1,134 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authdb
+  template:
+    metadata:
+      labels:
+        app: authdb
+    spec:
+      containers:
+        - name: authdb
+          image: mysql:8.0.28 
+          resources:
+            requests:
+              memory: "600Mi"
+              cpu: "100m"
+            limits:
+              memory: "1000Mi"
+              cpu: "200m"
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: course-registration-secrets
+                key: dbs_root_password
+          - name: MYSQL_DATABASE
+            value: "AuthDB"
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: course-registration-secrets
+                key: auth_db_username
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: course-registration-secrets
+                key: auth_db_password
+          ports:
+            - containerPort: 3306
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coursemanagedb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coursemanagedb
+  template:
+    metadata:
+      labels:
+        app: coursemanagedb
+    spec:
+      containers:
+        - name: coursemanagedb
+          image: mysql:8.0.28
+          resources:
+            requests:
+              memory: "600Mi"
+              cpu: "100m"
+            limits:
+              memory: "1000Mi"
+              cpu: "200m"
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: course-registration-secrets
+                key: dbs_root_password
+          - name: MYSQL_DATABASE
+            value: "CourseManageDb"
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: course-registration-secrets
+                key: course_manager_db_username
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: course-registration-secrets
+                key: course_manager_db_password
+          ports:
+            - containerPort: 3306
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: courseselectiondb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: courseselectiondb
+  template:
+    metadata:
+      labels:
+        app: courseselectiondb
+    spec:
+      containers:
+        - name: courseselectiondb
+          image: mysql:8.0.28
+          resources:
+            requests:
+              memory: "600Mi"
+              cpu: "100m"
+            limits:
+              memory: "1000Mi"
+              cpu: "200m"
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: course-registration-secrets
+                key: dbs_root_password
+          - name: MYSQL_DATABASE
+            value: "CourseSelectionDb"
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: course-registration-secrets
+                key: course_selector_db_username
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: course-registration-secrets
+                key: course_sekector_db_password
+          ports:
+            - containerPort: 3306

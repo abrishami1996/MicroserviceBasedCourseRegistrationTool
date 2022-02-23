@@ -1,0 +1,7 @@
+cleaning:
+	code authentication between APIs,
+	the returned message and status code of it,
+	how different APIs recieve parameters
+
+userpanel : when removing a course, it should be also removed from taken courses
+test project by sajjad iranmanesh

@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: course-registration-configmap
+data:
+  AUTH_SERVICE_DOMAIN: "authservice.default.svc.cluster.local"
+  AUTH_SERVICE_PORT: "9090"
+  
+  COURSE_MANAGE_SERVICE_DOMAIN: "coursemanageservice.default.svc.cluster.local"
+  COURSE_MANAGE_SERVICE_PORT: "9090"
+  
+  COURSE_SELECTION_SERVICE_DOMAIN: "courseselectionservice.default.svc.cluster.local"
+  COURSE_SELECTION_SERVICE_PORT: "9090"
+
+  AUTH_DB_SERVICE_DOMAIN: "authdbservice.default.svc.cluster.local"
+  AUTH_DB_SERVICE_PORT: "3306"
+
+  COURSE_MANAGE_DB_SERVICE_DOMAIN: "coursemanagedbservice.default.svc.cluster.local"
+  COURSE_MANAGE_DB_SERVICE_PORT: "3306"
+
+  COURSE_SELECTION_DB_SERVICE_DOMAIN: "courseselectiondbservice.default.svc.cluster.local"
+  COURSE_SELECTION_DB_SERVICE_PORT: "3306"
+
+  AUTH_DB_NAME: "AuthDB"
+  COURSE_MANAGE_DB_NAME: "CourseManageDb"
+  COURSE_SELECTION_DB_NAME: "CourseSelectionDb"
+ 
+  authDbConnectionURL: jdbc:mysql://authdbservice.default.svc.cluster.local:3306/AuthDB?allowPublicKeyRetrieval=true&useSSL=false
+  courseManageDbConnectionURL: jdbc:mysql://coursemanagedbservice.default.svc.cluster.local:3306/CourseManageDb?allowPublicKeyRetrieval=true&useSSL=false
+  courseSelectionDbConnectionURL: jdbc:mysql://courseselectiondbservice.default.svc.cluster.local:3306/CourseSelectionDb?allowPublicKeyRetrieval=true&useSSL=false

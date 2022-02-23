@@ -1,0 +1,284 @@
+#### Auth module deployment ####
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: ardalanfp/course_registeration_project_auth_module:1
+          resources:
+            requests:
+              memory: "200Mi"
+              cpu: "100m"
+            limits:
+              memory: "600Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 8080
+          env:
+            # values from ConfigMap
+            - name: AuthDbServiceDomain
+              valueFrom: 
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: AUTH_DB_SERVICE_DOMAIN
+
+            - name: AuthDbServicePort
+              valueFrom: 
+                  configMapKeyRef:
+                    name: course-registration-configmap
+                    key: AUTH_DB_SERVICE_PORT
+
+            - name: AuthDbName
+              valueFrom: 
+                  configMapKeyRef:
+                    name: course-registration-configmap
+                    key: AUTH_DB_NAME
+            
+            # values from Secrets
+            - name: AuthDbUserName
+              valueFrom:
+                secretKeyRef:
+                  name: course-registration-secrets
+                  key: auth_db_username
+            - name: AuthDbPassword
+              valueFrom:
+                secretKeyRef:
+                  name: course-registration-secrets
+                  key: auth_db_password
+            - name: jwtSecretKey
+              valueFrom:
+                secretKeyRef:
+                  name: course-registration-secrets
+                  key: jwt_secret_key
+---
+#### course manager module deployment ####
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coursemanage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coursemanage
+  template:
+    metadata:
+      labels:
+        app: coursemanage
+    spec:
+      containers:
+        - name: coursemanage
+          image: ardalanfp/course_registeration_project_course_manager_module:1
+          resources:
+            requests:
+              memory: "200Mi"
+              cpu: "100m"
+            limits:
+              memory: "600Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 8080
+          env:
+            # values from ConfigMap
+            - name: CourseManageDbServiceDomain
+              valueFrom: 
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: COURSE_MANAGE_DB_SERVICE_DOMAIN
+            
+            - name: CourseManageDbServicePort
+              valueFrom: 
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: COURSE_MANAGE_DB_SERVICE_PORT
+              
+            - name: CourseManageDbName
+              valueFrom: 
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: COURSE_MANAGE_DB_NAME
+
+            - name: AuthServiceDomain
+              valueFrom: 
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: AUTH_SERVICE_DOMAIN
+
+            - name: AuthServicePort
+              valueFrom: 
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: AUTH_SERVICE_PORT
+            
+            # values from Secrets
+            - name: CourseManageDbUser
+              valueFrom:
+                secretKeyRef:
+                  name: course-registration-secrets
+                  key: course_manager_db_username
+              
+            - name: CourseManageDbPassword
+              valueFrom:
+                secretKeyRef:
+                  name: course-registration-secrets
+                  key: course_manager_db_password
+---
+#### course selection module deployment ####
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: courseselection
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: courseselection
+  template:
+    metadata:
+      labels:
+        app: courseselection
+    spec:
+      containers:
+        - name: courseselection
+          image: ardalanfp/course_registeration_project_course_selection_module:1
+          resources:
+            requests:
+              memory: "200Mi"
+              cpu: "100m"
+            limits:
+              memory: "600Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 8080
+          env:
+            # values from ConfigMap
+            - name: CourseSelectionDbServiceDomain
+              valueFrom: 
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: COURSE_SELECTION_DB_SERVICE_DOMAIN
+            
+            - name: CourseSelectionDbServicePort
+              valueFrom: 
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: COURSE_SELECTION_DB_SERVICE_PORT
+                
+            - name: CourseSelectionDbName
+              valueFrom: 
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: COURSE_SELECTION_DB_NAME
+            
+            - name: AuthServiceDomain
+              valueFrom: 
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: AUTH_SERVICE_DOMAIN
+
+            - name: AuthServicePort
+              valueFrom: 
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: AUTH_SERVICE_PORT
+            
+            - name: CourseManagerServiceDomain
+              valueFrom: 
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: COURSE_MANAGE_SERVICE_DOMAIN
+
+            - name: CourseManagerServicePort
+              valueFrom: 
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: COURSE_MANAGE_SERVICE_PORT
+              
+            # values from Secrets
+            - name: CourseSelectionDbUser
+              valueFrom:
+                secretKeyRef:
+                  name: course-registration-secrets
+                  key: course_selector_db_username
+              
+            - name: CourseSelectionDbPassword
+              valueFrom:
+                secretKeyRef:
+                  name: course-registration-secrets
+                  key: course_sekector_db_password
+---
+#### userpanel module deployment ####
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userpanel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userpanel
+  template:
+    metadata:
+      labels:
+        app: userpanel
+    spec:
+      containers:
+        - name: userpanel
+          image: ardalanfp/course_registeration_project_user_panel:1
+          resources:
+            requests:
+              memory: "300Mi"
+              cpu: "100m"
+            limits:
+              memory: "600Mi"
+              cpu: "200m"
+          ports:
+            - containerPort: 8000
+          env:
+            - name: AUTH_SERVICE_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: AUTH_SERVICE_DOMAIN
+
+            - name: AUTH_SERVICE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: AUTH_SERVICE_PORT
+            
+            - name: COURSE_MANAGE_SERVICE_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: COURSE_MANAGE_SERVICE_DOMAIN
+            
+            - name: COURSE_MANAGE_SERVICE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: COURSE_MANAGE_SERVICE_PORT
+            
+            - name: COURSE_SELECTION_SERVICE_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key:  COURSE_SELECTION_SERVICE_DOMAIN
+            
+            - name: COURSE_SELECTION_SERVICE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: course-registration-configmap
+                  key: COURSE_SELECTION_SERVICE_PORT
+

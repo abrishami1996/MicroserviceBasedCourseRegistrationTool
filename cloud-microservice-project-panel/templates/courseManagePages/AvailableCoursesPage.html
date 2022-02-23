@@ -1,0 +1,31 @@
+{% extends "Base.html" %}
+
+{% block content %}
+
+    {% for c in courses %}
+       {{ c }}
+<!--        <p>-->
+<!--            <span>Name :</span>-->
+<!--            <span>{{ c.name }}</span>-->
+
+<!--        </p>-->
+<!--        <p>-->
+<!--            <span>Credit Hour :</span>-->
+<!--            <span>{{ c.creditHour }}</span>-->
+<!--        </p>-->
+<!--        <p>-->
+<!--            <span>Course code:</span>-->
+<!--            <span>{{c.code}}</span>-->
+<!--        </p>-->
+
+        {% if 'ROLE_STUDENT' in roleList%}
+            <a href="{% url 'addTakenCourse' c.code %}"> take course</a>
+        {% endif %}
+
+        {% if 'ROLE_ADMIN' in  roleList or 'ROLE_EMPLOYEE' in  roleList %}
+            <a href="{% url 'editAvailableCourse' c.code %}">edit course</a>
+        {% endif %}
+        <hr>
+    {% endfor %}
+    
+{% endblock %}

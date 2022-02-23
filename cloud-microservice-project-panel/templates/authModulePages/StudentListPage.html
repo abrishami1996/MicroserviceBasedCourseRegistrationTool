@@ -1,0 +1,15 @@
+{% extends "Base.html" %}
+
+{% block content %}
+{% for u in userList %}
+    <div>
+    {{ u }}
+    </div>
+    <div>
+        <a href="/courses/taking/{{ u.studentNumber }}/all">List ot taken courses</a>
+    </div>
+    <hr>
+
+{% endfor %}
+
+{% endblock %}
